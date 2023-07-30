@@ -1,0 +1,209 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+</head>
+<style>
+    body{
+        background-image:url("https://www.arel.k12.tr/files/img/bg/kayit-kabul.jpg");
+        background-repeat:no-repeat;
+        background-attachment:fixed; 
+        background-size:100% 100%;
+    }
+    h1{
+        text-align:left;
+    }
+    .avatar{
+        width:90px;
+        height:90px;
+        border-radius:50%;
+        margin-right:auto;
+        float:left;
+    }
+    p{
+        font-size:1.7em;
+        padding-left:20%;
+        font-family:Comic Sans MS;
+    }
+    .container{
+        display:grid; 
+        grid-template-columns:1fr 1fr;
+        column-gap:25px;
+    }
+    .container1{
+        height:750px;
+        width:550px;
+        border-radius:64px 96px 128px 32px;
+        border:3px solid black;
+        padding:30px;
+        padding-left:5%;
+        margin-left:20px;
+        margin-top:20px;
+        margin-bottom:20px;
+        color:black;
+        font-size:1.29em;
+        font-family:Bodoni MT;
+    }
+    form{
+        display:flex;
+        flex-direction:column;
+    }
+
+    input{
+        width:440px;
+        border-radius:30px;
+        padding:10px;
+        color:black;
+        font-size:0.7em;
+    }
+    field{
+        overflow:hidden;
+        border:none;
+    }
+    .choice{
+        float:left;
+        clear:none;
+    }
+    label{
+        margin-bottom:8px;
+        float:left;
+        clear:none;
+        display:block;
+        padding:0px 1em 0px 5px;
+    }
+    input[type=radio],
+    input.radio{
+        width:18px;
+        float:left;
+        clear:none;
+        margin:1px 0 0 1px;
+    }
+    button {
+        width:30%;
+        padding:5px;
+        border-radius:0.5em;
+        font-size:1.24em;
+        font-family:Bodoni MT;
+        background-color:white;
+        color:#800000;
+        cursor: pointer;
+    }
+    button:hover{
+        border:none;
+        background-color:#CD5C5C;
+        color:black;
+    }
+    ul{
+        list-style:none;
+        padding:0;
+    }
+    li{
+        padding:8px;
+        border-bottom:1px solid #ccc;
+    }
+    li:last-child{
+        border-bottom:none;
+    }
+    .container2{
+        font-size:1.29em;
+        font-family:Comic Sans MS;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="container1">
+        <img src="https://static.thenounproject.com/png/1743563-200.png" alt="Avatar" class="avatar">
+        <h1> Student Registration Form</h1>
+        <form id="registrationForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <label for="gender">Gender:</label>
+            <field>
+                <div class="choice">
+                    <input type="radio" class="radio" name="gender" value="Female" id="gender">
+                    <label for="female">Female</label>
+                    <input type="radio" class="radio" name="gender" value="Male" id="gender">
+                    <label for="male">Male</label>
+                    <input type="radio" class="radio" name="gender" value="Other" id="gender">
+                    <label for="other">Other</label>
+                </div>
+            </field>
+            <label for="dob">DOB:</label>
+            <input type="date" id="dob" required>
+            <label for="degree" >Degree:</label>
+            <label for="mtech"><input type="radio" class="radio" name="degree" value="B.Tech" id="degree">M.tech</label>
+            <label for="btech"><input type="radio" class="radio" name="degree" value="M.Tech" id="degree">B.tech</label>
+            <label for="address">Address:</label>
+            <input type="text" id="address" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" required><br>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <div class="container2" id="registeredUsers">
+        <p style="color:black">__.Registered Users.__</p>
+        <ul id="usersList"></ul>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const registrationForm=document.getElementById('registrationForm');
+        const usersList=document.getElementById('usersList');
+
+        registrationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name=document.getElementById('name').value;
+            const gender=document.getElementById('gender').value;
+            const dob=document.getElementById('dob').value;
+            const degree=document.getElementById('degree').value;
+            const address=document.getElementById('address').value;
+            const email=document.getElementById('email').value;
+            const phone=document.getElementById('phone').value;
+
+            if(name && gender && dob && degree && address && email && phone){
+                const userData= {
+                    name: name,
+                    gender:gender,
+                    dob:dob,
+                    degree:degree,
+                    address:address,
+                    email: email,
+                    phone: phone
+            };
+
+            displayUserData(userData);
+            clearFormFields();
+        }
+    });
+
+    function displayUserData(userData){
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <strong>Name:</strong>${userData.name}<br>
+            <strong>Gender:</strong>${userData.gender}<br>
+            <strong>DOB:</strong>${userData.dob}<br>
+            <strong>Degree:</strong>${userData.degree}<br>
+            <strong>Address:</strong>${userData.address}<br>
+            <strong>Email:</strong>${userData.email} <br>
+            <strong>Phone:</strong>${userData.phone}
+        `;
+        usersList.appendChild(listItem);
+    }
+
+    function clearFormFields(){
+        document.getElementById('name').value='';
+        document.getElementById('gender').value='';
+        document.getElementById('degree').value='';
+        document.getElementById('dob').value='';
+        document.getElementById('address').value='';
+        document.getElementById('email').value='';
+        document.getElementById('phone').value='';
+    }
+    });
+</script>
+</body>
+</html>
